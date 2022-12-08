@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import br.com.project.constants.ConstantsEnum;
+
 public class Service {
 	public static void main(String[] args) {
 		List<Registrador> registradores = getRegistradores();
@@ -22,7 +24,7 @@ public class Service {
 			if (instrucaoExist(instrucao, rotulos)) {
 				for (Rotulo rotulo : rotulos) {
 					if (instrucao == rotulo.getInstrucao()) {
-						if (rotulo.getOperacao().equals("se")) {
+						if (rotulo.getOperacao().equals(ConstantsEnum.SE.getValue())) {
 							String auxString = rotulo.getRegistrador().substring(5, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
@@ -34,7 +36,7 @@ public class Service {
 									}
 								}
 							}
-						} else if (rotulo.getOperacao().equals("ad")) {
+						} else if (rotulo.getOperacao().equals(ConstantsEnum.AD.getValue())) {
 							String auxString = rotulo.getRegistrador().substring(3, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
@@ -44,7 +46,7 @@ public class Service {
 								}
 							}
 
-						} else if (rotulo.getOperacao().equals("sub")) {
+						} else if (rotulo.getOperacao().equals(ConstantsEnum.SUB.getValue())) {
 							String auxString = rotulo.getRegistrador().substring(4, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
@@ -121,21 +123,21 @@ public class Service {
 				String operacao = "", registrador = "";
 				Integer vaPara = null, seNao = null;
 
-				if (line.contains("se")) {
-					operacao = "se";
-					registrador = line.substring(line.indexOf("se ") + 3, line.indexOf(" então"));
-					vaPara = Integer.valueOf(line.substring(line.indexOf("vá_para ") + 8, line.indexOf(" senão")));
-					seNao = Integer.valueOf(line.substring(line.indexOf("senão vá_para ") + 14, line.length()));
+				if (line.contains(ConstantsEnum.SE.getValue())) {
+					operacao = ConstantsEnum.SE.getValue();
+					registrador = line.substring(line.indexOf(ConstantsEnum.SE.getValue() + " ") + 3, line.indexOf(" " + ConstantsEnum.ENTAO.getValue()));
+					vaPara = Integer.valueOf(line.substring(line.indexOf(ConstantsEnum.VA_PARA.getValue() + " ") + 8, line.indexOf(" " + ConstantsEnum.SENAO.getValue())));
+					seNao = Integer.valueOf(line.substring(line.indexOf(ConstantsEnum.SENAO_VA_PARA.getValue() + " ") + 14, line.length()));
 
-				} else if (line.contains("ad")) {
-					operacao = "ad";
-					registrador = line.substring(line.indexOf("faça ") + 5, line.indexOf(" vá_para"));
-					vaPara = Integer.valueOf(line.substring(line.indexOf("vá_para ") + 8, line.length()));
+				} else if (line.contains(ConstantsEnum.AD.getValue())) {
+					operacao = ConstantsEnum.AD.getValue();
+					registrador = line.substring(line.indexOf(ConstantsEnum.FACA.getValue() + " ") + 5, line.indexOf(" " + ConstantsEnum.VA_PARA.getValue()));
+					vaPara = Integer.valueOf(line.substring(line.indexOf(ConstantsEnum.VA_PARA.getValue() + " ") + 8, line.length()));
 
-				} else if (line.contains("sub")) {
-					operacao = "sub";
-					registrador = line.substring(line.indexOf("faça ") + 5, line.indexOf(" vá_para"));
-					vaPara = Integer.valueOf(line.substring(line.indexOf("vá_para ") + 8, line.length()));
+				} else if (line.contains(ConstantsEnum.SUB.getValue())) {
+					operacao = ConstantsEnum.SUB.getValue();
+					registrador = line.substring(line.indexOf(ConstantsEnum.FACA.getValue() + " ") + 5, line.indexOf(" " + ConstantsEnum.VA_PARA.getValue()));
+					vaPara = Integer.valueOf(line.substring(line.indexOf(ConstantsEnum.VA_PARA.getValue() + " ") + 8, line.length()));
 
 				}
 
