@@ -3,24 +3,81 @@ package br.com.project;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 public class Service {
 	public static void main(String[] args) {
-		executa(getRegistradores(), getInstrucoes());
+		List<Registrador> registradores = getRegistradores();
+		List<Rotulo> instrucoes = getInstrucoes();
+		executa(registradores, instrucoes);
+
 	}
-	
+
 	public static void executa(List<Registrador> registradors, List<Rotulo> rotulos) {
 		boolean aux = true;
+		Integer instrucao = 1;
+		System.out.println("Computação: ");
 		while (aux) {
-			for (Rotulo rotulo : rotulos) {
-				if (rotulo.getInstrucao().equals("se")) {
-					
+			if (instrucaoExist(instrucao, rotulos)) {
+				for (Rotulo rotulo : rotulos) {
+					if (instrucao == rotulo.getInstrucao()) {
+						if (rotulo.getOperacao().equals("se")) {
+							String auxString = rotulo.getRegistrador().substring(5, rotulo.getRegistrador().length());
+							for (Registrador registrador : registradors) {
+								if (registrador.getId().equals(auxString)) {
+									printComputacao(registradors, instrucao);
+									if (registrador.getValue() == 0) {
+										instrucao = rotulo.getVaPara();
+									} else {
+										instrucao = rotulo.getSeNao();
+									}
+								}
+							}
+						} else if (rotulo.getOperacao().equals("ad")) {
+							String auxString = rotulo.getRegistrador().substring(3, rotulo.getRegistrador().length());
+							for (Registrador registrador : registradors) {
+								if (registrador.getId().equals(auxString)) {
+									printComputacao(registradors, instrucao);
+									registrador.setValue(registrador.getValue() + 1);
+									instrucao = rotulo.getVaPara();
+								}
+							}
+
+						} else if (rotulo.getOperacao().equals("sub")) {
+							String auxString = rotulo.getRegistrador().substring(4, rotulo.getRegistrador().length());
+							for (Registrador registrador : registradors) {
+								if (registrador.getId().equals(auxString)) {
+									printComputacao(registradors, instrucao);
+									registrador.setValue(registrador.getValue() - 1);
+									instrucao = rotulo.getVaPara();
+								}
+							}
+						}
+					}
 				}
+			} else {
+				break;
 			}
 		}
+		
+		System.out.println("Valor Registradores: ");
+		System.out.println(registradors.toString());
+	}
+
+	private static void printComputacao(List<Registrador> registradors, Integer instrucao) {
+		System.out.println("(".concat(instrucao.toString())
+				.concat(",(").concat(registradors.get(0).getValue().toString()).concat(",")
+				.concat(registradors.get(1).getValue().toString()).concat("))"));
+	}
+
+	private static boolean instrucaoExist(Integer instrucao, List<Rotulo> rotulos) {
+		for (Rotulo rotulo : rotulos) {
+			if (rotulo.getInstrucao() == instrucao) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static List<Registrador> getRegistradores() {
@@ -38,7 +95,6 @@ public class Service {
 				Registrador registrador = new Registrador();
 				registrador.setId(value.substring(0, value.indexOf('=')));
 				registrador.setValue(Long.parseLong(value.substring(value.indexOf('=') + 1, value.length())));
-				System.out.println(registrador);
 				registradores.add(registrador);
 			}
 			obj.close();
@@ -85,7 +141,7 @@ public class Service {
 
 				Rotulo rotulo = new Rotulo(posInstrucao, operacao, registrador, vaPara, seNao);
 				rotulos.add(rotulo);
-				
+
 			}
 			obj.close();
 

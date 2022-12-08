@@ -31,7 +31,7 @@ public class Registrador {
 
 	@Override
 	public String toString() {
-		return "Registrador [id=" + id + ", value=" + value + "]";
+		return "id= " + id + ", value= " + value;
 	}
 	
 }
