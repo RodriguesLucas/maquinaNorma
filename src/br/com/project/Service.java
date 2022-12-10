@@ -84,10 +84,14 @@ public class Service {
 
 	public static List<Registrador> getRegistradores() {
 		List<Registrador> registradores = new ArrayList<>();
-
+		
+		File currentDirFile = new File(".");
+		String relativePath = currentDirFile.getAbsolutePath();
+		String scriptPath = relativePath.substring(0, relativePath.length() -2) + "\\src\\br\\com\\project\\scripts\\script.txt";
+		
 		try {
 			File doc = new File(
-					"E:\\ProjetosJava\\workSpaceJava2022\\MaquinaNorma\\src\\br\\com\\project\\scripts\\script.txt");
+					scriptPath);
 			Scanner obj = new Scanner(doc);
 			String registradoreString = obj.nextLine();
 
@@ -110,9 +114,14 @@ public class Service {
 
 	public static List<Rotulo> getInstrucoes() {
 		List<Rotulo> rotulos = new ArrayList<>();
+		
+		File currentDirFile = new File(".");
+		String relativePath = currentDirFile.getAbsolutePath();
+		String scriptPath = relativePath.substring(0, relativePath.length() -2) + "\\src\\br\\com\\project\\scripts\\script.txt";
+	
 		try {
 			File doc = new File(
-					"E:\\ProjetosJava\\workSpaceJava2022\\MaquinaNorma\\src\\br\\com\\project\\scripts\\script.txt");
+					scriptPath);
 			Scanner obj = new Scanner(doc);
 			obj.nextLine();
 			String line = "";
