@@ -52,7 +52,7 @@ public class Service {
 								}
 							}
 							executaMacro(rotulo.getOperacao(), macroRegs);
-							//TODO: VA PARA
+							instrucao = rotulo.getVaPara();
 							
 						} else if (rotulo.getOperacao().equals(ConstantsEnum.AD.getValue())) {
 							String auxString = rotulo.getRegistrador().substring(3, rotulo.getRegistrador().length());
@@ -97,17 +97,26 @@ public class Service {
 				for(Registrador regAux: macro.getRegistradorAuxiliar()) {				// adiciona registradores auxiliares
 					macroRegistradores.add(regAux);
 				}
+				
 				System.out.println("iniciodoMacro");
 				executa(macroRegistradores, macro.getInstrucoes(), false);
-				System.out.println("fimdoMacro + " + macroRegistradores);
+				System.out.println("fimdoMacro");
+				
+				for (int i=0; i<registradores.size(); i++) {							// seta os valores dos registradores do macro para os do programa principal
+					Registrador regMain = registradores.get(i);
+					regMain.setValue(macroRegistradores.get(i).getValue());
+				}
 			}
 		}
 	}
 	
 	private static void printComputacao(List<Registrador> registradors, Integer instrucao) {
-		System.out.println("(".concat(instrucao.toString())
-				.concat(",(").concat(registradors.get(0).getValue().toString()).concat(",")
-				.concat(registradors.get(1).getValue().toString()).concat("))"));
+		System.out.print("(".concat(instrucao.toString())
+				.concat(",(").concat(registradors.get(0).getValue().toString()));
+		for(int i=1; i<registradors.size(); i++) {
+			System.out.print(",".concat(registradors.get(i).getValue().toString()));
+		}
+		System.out.println("))");
 	}
 
 	public static String getScriptPath() {
@@ -227,9 +236,10 @@ public class Service {
 		File currentDirFile = new File(".");
 		String relativePath = currentDirFile.getAbsolutePath();
 		String macroAdicaoRegPath = relativePath.substring(0, relativePath.length() -2) + "\\src\\br\\com\\project\\scripts\\macros\\adicao_dois_registradores.txt";
-		
+		String macroZeraRegPath = relativePath.substring(0, relativePath.length() -2) + "\\src\\br\\com\\project\\scripts\\macros\\zera_registrador.txt";
+
 		macroPaths.add(macroAdicaoRegPath);
-		
+		macroPaths.add(macroZeraRegPath);
 		
 		
 		for(String path: macroPaths) {	// loop pelos arquivos de macro
@@ -255,14 +265,17 @@ public class Service {
 				macro.setRegistradorEntrada(registradoresEntrada);
 				
 				String registradoresAuxString = obj.nextLine();
-				String[] regsAux = registradoresAuxString.split(";");
-				for (String value : regsAux) {									//populando registradores auxiliares
-					Registrador registrador = new Registrador();
-					registrador.setId(value.substring(0, value.indexOf('=')));
-					registrador.setValue(Long.parseLong(value.substring(value.indexOf('=') + 1, value.length())));
-					registradoresAux.add(registrador);
+				if(!registradoresAuxString.isEmpty()) {
+					String[] regsAux = registradoresAuxString.split(";");
+					for (String value : regsAux) {									//populando registradores auxiliares
+						Registrador registrador = new Registrador();
+						registrador.setId(value.substring(0, value.indexOf('=')));
+						registrador.setValue(Long.parseLong(value.substring(value.indexOf('=') + 1, value.length())));
+						registradoresAux.add(registrador);
+					}
 				}
 				macro.setRegistradorAuxiliar(registradoresAux);
+				
 				obj.close();
 
 			} catch (FileNotFoundException e) {
