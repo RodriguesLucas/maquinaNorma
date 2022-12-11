@@ -1,0 +1,10 @@
+adReg
+r1;r2
+c=0
+1: se zero_r2 então vá_para 5 senão vá_para 2
+2: faça ad_r1 vá_para 3
+3: faça ad_c vá_para 4
+4: faça sub_r2 vá_para 1
+5: se zero_c então vá_para 9 senão vá_para 6
+6: faça ad_r2 vá_para 7
+7: faça sub_c vá_para 5
