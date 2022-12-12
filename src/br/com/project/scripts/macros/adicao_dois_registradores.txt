@@ -6,5 +6,5 @@ c=0
 3: faça ad_c vá_para 4
 4: faça sub_r2 vá_para 1
 5: se zero_c então vá_para 9 senão vá_para 6
-6: faça zera_r2 vá_para 7
+6: faça ad_r2 vá_para 7
 7: faça sub_c vá_para 5
