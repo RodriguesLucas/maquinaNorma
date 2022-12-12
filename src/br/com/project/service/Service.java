@@ -1,4 +1,4 @@
-package br.com.project;
+package br.com.project.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import br.com.project.constants.ConstantsEnum;
+import br.com.project.form.Macro;
+import br.com.project.form.Registrador;
+import br.com.project.form.Rotulo;
 
 public class Service {
 	static List<Macro> macros;
@@ -28,7 +31,7 @@ public class Service {
 			if (instrucaoExist(instrucao, rotulos)) {
 				for (Rotulo rotulo : rotulos) {
 					if (instrucao == rotulo.getInstrucao()) {
-						if (rotulo.getOperacao().equals(ConstantsEnum.SE.getValue())) {
+						if (rotulo.getOperacao().equals(ConstantsEnum.SE.getValue())) { // Caso a instrução for uma comparação
 							String auxString = rotulo.getRegistrador().substring(5, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
@@ -40,7 +43,7 @@ public class Service {
 									}
 								}
 							}
-						} else if (rotulo.isMacro()) {
+						} else if (rotulo.isMacro()) { // Caso a instrução for uma macro
 							String auxString = rotulo.getRegistrador().substring(rotulo.getRegistrador().indexOf("_") + 1, rotulo.getRegistrador().length());
 							String[] regs = auxString.split("_");
 							List<Registrador> macroRegs = new ArrayList<>();
@@ -54,7 +57,7 @@ public class Service {
 							executaMacro(rotulo.getOperacao(), macroRegs);
 							instrucao = rotulo.getVaPara();
 							
-						} else if (rotulo.getOperacao().equals(ConstantsEnum.AD.getValue())) {
+						} else if (rotulo.getOperacao().equals(ConstantsEnum.AD.getValue())) { // Caso a instrução for de adição
 							String auxString = rotulo.getRegistrador().substring(3, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
@@ -64,7 +67,7 @@ public class Service {
 								}
 							}
 
-						} else if (rotulo.getOperacao().equals(ConstantsEnum.SUB.getValue())) {
+						} else if (rotulo.getOperacao().equals(ConstantsEnum.SUB.getValue())) { // Caso a instrução for de subtração
 							String auxString = rotulo.getRegistrador().substring(4, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
@@ -89,12 +92,12 @@ public class Service {
 		List<Registrador> macroRegistradores = new ArrayList<>();
 		for (Macro macro : macros) {
 			if (macro.getId().equals(idMacro)) {
-				for(int i=0; i<macro.getRegistradorEntrada().size(); i++) {				// adiciona registradores auxiliares
+				for(int i=0; i<macro.getRegistradorEntrada().size(); i++) {				// Adiciona registradores auxiliares
 					Registrador regInput = macro.getRegistradorEntrada().get(i);
 					regInput.setValue(registradores.get(i).getValue());
 					macroRegistradores.add(regInput);
 				}
-				for(Registrador regAux: macro.getRegistradorAuxiliar()) {				// adiciona registradores auxiliares
+				for(Registrador regAux: macro.getRegistradorAuxiliar()) {				// Adiciona registradores auxiliares
 					macroRegistradores.add(regAux);
 				}
 				
@@ -102,7 +105,7 @@ public class Service {
 				executa(macroRegistradores, macro.getInstrucoes(), false);
 				System.out.println("fimdoMacro");
 				
-				for (int i=0; i<registradores.size(); i++) {							// seta os valores dos registradores do macro para os do programa principal
+				for (int i=0; i<registradores.size(); i++) {							// Seta os valores dos registradores do macro para os do programa principal
 					Registrador regMain = registradores.get(i);
 					regMain.setValue(macroRegistradores.get(i).getValue());
 				}
@@ -175,6 +178,7 @@ public class Service {
 		return registradores;
 	}
 	
+	// Método para pegar todas as instruções do arquivo
 	public static List<Rotulo> getInstrucoes(boolean isScript, String filePath) {
 		List<Rotulo> rotulos = new ArrayList<>();
 		
@@ -184,7 +188,7 @@ public class Service {
 			Scanner obj = new Scanner(doc);
 			
 			obj.nextLine();
-			if(!isScript) {							// verifica se pega instruções macro ou script
+			if(!isScript) {							// Verifica se pega instruções macro ou script
 				obj.nextLine(); obj.nextLine();
 			}
 			String line = "";
@@ -196,7 +200,7 @@ public class Service {
 				Integer vaPara = null, seNao = null;
 				boolean macro = false;
 				
-				if (line.contains(ConstantsEnum.SE.getValue())) {
+				if (line.contains(ConstantsEnum.SE.getValue())) { // Valida se é uma comparação
 					operacao = ConstantsEnum.SE.getValue();
 					registrador = line.substring(line.indexOf(ConstantsEnum.SE.getValue() + " ") + 3, line.indexOf(" " + ConstantsEnum.ENTAO.getValue()));
 					vaPara = Integer.valueOf(line.substring(line.indexOf(ConstantsEnum.VA_PARA.getValue() + " ") + 8, line.indexOf(" " + ConstantsEnum.SENAO.getValue())));
@@ -242,7 +246,7 @@ public class Service {
 		macroPaths.add(macroZeraRegPath);
 		
 		
-		for(String path: macroPaths) {	// loop pelos arquivos de macro
+		for(String path: macroPaths) {	// Loop pelos arquivos de macro
 			Macro macro = new Macro();
 			List<Registrador> registradoresEntrada = new ArrayList<>();
 			List<Registrador> registradoresAux = new ArrayList<>();
@@ -257,7 +261,7 @@ public class Service {
 				
 				String registradoresInputString = obj.nextLine();
 				String[] regsInput = registradoresInputString.split(";");
-				for (String value : regsInput) {								//populando registradores de entrada
+				for (String value : regsInput) {								//Populando registradores de entrada
 					Registrador registrador = new Registrador();
 					registrador.setId(value);
 					registradoresEntrada.add(registrador);
@@ -267,7 +271,7 @@ public class Service {
 				String registradoresAuxString = obj.nextLine();
 				if(!registradoresAuxString.isEmpty()) {
 					String[] regsAux = registradoresAuxString.split(";");
-					for (String value : regsAux) {									//populando registradores auxiliares
+					for (String value : regsAux) {									//Populando registradores auxiliares
 						Registrador registrador = new Registrador();
 						registrador.setId(value.substring(0, value.indexOf('=')));
 						registrador.setValue(Long.parseLong(value.substring(value.indexOf('=') + 1, value.length())));
