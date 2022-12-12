@@ -32,7 +32,7 @@ public class Service {
 							String auxString = rotulo.getRegistrador().substring(5, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
-									printComputacao(registradors, instrucao);
+									printComputacao(registradors, instrucao, isMain);
 									if (registrador.getValue() == 0) {
 										instrucao = rotulo.getVaPara();
 									} else {
@@ -58,7 +58,7 @@ public class Service {
 							String auxString = rotulo.getRegistrador().substring(3, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
-									printComputacao(registradors, instrucao);
+									printComputacao(registradors, instrucao, isMain);
 									registrador.setValue(registrador.getValue() + 1);
 									instrucao = rotulo.getVaPara();
 								}
@@ -68,7 +68,7 @@ public class Service {
 							String auxString = rotulo.getRegistrador().substring(4, rotulo.getRegistrador().length());
 							for (Registrador registrador : registradors) {
 								if (registrador.getId().equals(auxString)) {
-									printComputacao(registradors, instrucao);
+									printComputacao(registradors, instrucao, isMain);
 									registrador.setValue(registrador.getValue() - 1);
 									instrucao = rotulo.getVaPara();
 								}
@@ -98,9 +98,9 @@ public class Service {
 					macroRegistradores.add(regAux);
 				}
 				
-				System.out.println("iniciodoMacro");
+				System.out.println("  Início de Macro");
 				executa(macroRegistradores, macro.getInstrucoes(), false);
-				System.out.println("fimdoMacro");
+				System.out.println("  Fim de Macro");
 				
 				for (int i=0; i<registradores.size(); i++) {							// seta os valores dos registradores do macro para os do programa principal
 					Registrador regMain = registradores.get(i);
@@ -110,7 +110,8 @@ public class Service {
 		}
 	}
 	
-	private static void printComputacao(List<Registrador> registradors, Integer instrucao) {
+	private static void printComputacao(List<Registrador> registradors, Integer instrucao, boolean isMain) {
+		if(!isMain) System.out.print("  ");
 		System.out.print("(".concat(instrucao.toString())
 				.concat(",(").concat(registradors.get(0).getValue().toString()));
 		for(int i=1; i<registradors.size(); i++) {

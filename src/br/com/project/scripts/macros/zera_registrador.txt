@@ -1,5 +1,5 @@
 zera
 r1
 
-1: se zero_r1 então vá_para 5 senão vá_para 2
+1: se zero_r1 então vá_para 9 senão vá_para 2
 2: faça sub_r1 vá_para 1
