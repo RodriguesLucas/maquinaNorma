@@ -1,4 +1,4 @@
-package br.com.project;
+package br.com.project.form;
 
 import java.util.List;
 
@@ -8,11 +8,9 @@ public class Macro {
 	private List<Rotulo> instrucoes;
 	private List<Registrador> registradorEntrada;
 	private List<Registrador> registradorAuxiliar;
-	
-	
+
 	public Macro() {
 	}
-	
 
 	public Macro(String id, List<Rotulo> instrucoes, List<Registrador> registradorEntrada,
 			List<Registrador> registradorAuxiliar) {
@@ -22,9 +20,6 @@ public class Macro {
 		this.registradorAuxiliar = registradorAuxiliar;
 	}
 
-
-
-
 	public List<Rotulo> getInstrucoes() {
 		return instrucoes;
 	}
@@ -32,7 +27,6 @@ public class Macro {
 	public void setInstrucoes(List<Rotulo> instrucoes) {
 		this.instrucoes = instrucoes;
 	}
-
 
 	public String getId() {
 		return id;
@@ -57,14 +51,11 @@ public class Macro {
 	public void setRegistradorAuxiliar(List<Registrador> registradorAuxiliar) {
 		this.registradorAuxiliar = registradorAuxiliar;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Id: " + this.id + 
-				"\n Registradores Entrada: " + this.registradorEntrada +
-				"\n Registradores Auxiliar: " + this.registradorAuxiliar + 
-				"\n Instruções: " + this.instrucoes;
+		return "Id: " + this.id + "\n Registradores Entrada: " + this.registradorEntrada + "\n Registradores Auxiliar: "
+				+ this.registradorAuxiliar + "\n Instruções: " + this.instrucoes;
 	}
-	
 
 }

@@ -1,4 +1,4 @@
-package br.com.project;
+package br.com.project.form;
 
 public class Rotulo {
 	private Integer instrucao;
@@ -8,11 +8,11 @@ public class Rotulo {
 	private Integer seNao;
 	private boolean macro;
 
-
 	public Rotulo() {
 	}
 
-	public Rotulo(Integer instrucao, String operacao, String registrador, Integer vaPara, Integer seNao, boolean macro) {
+	public Rotulo(Integer instrucao, String operacao, String registrador, Integer vaPara, Integer seNao,
+			boolean macro) {
 		this.instrucao = instrucao;
 		this.operacao = operacao;
 		this.registrador = registrador;
@@ -61,7 +61,7 @@ public class Rotulo {
 	public void setSeNao(Integer seNao) {
 		this.seNao = seNao;
 	}
-	
+
 	public boolean isMacro() {
 		return macro;
 	}
@@ -73,8 +73,7 @@ public class Rotulo {
 	@Override
 	public String toString() {
 		return "Rotulo [instrucao=" + instrucao + ", operacao=" + operacao + ", registrador=" + registrador
-				+ ", vaPara=" + vaPara + ", seNao=" + seNao + ", é macro=" + isMacro() +"]";
+				+ ", vaPara=" + vaPara + ", seNao=" + seNao + ", é macro=" + isMacro() + "]";
 	}
 
-	
 }
