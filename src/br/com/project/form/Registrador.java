@@ -1,7 +1,7 @@
-package br.com.project;
+package br.com.project.form;
 
 public class Registrador {
-	
+
 	private String id;
 	private Long value;
 
@@ -33,5 +33,5 @@ public class Registrador {
 	public String toString() {
 		return "id= " + id + ", value= " + value;
 	}
-	
+
 }
