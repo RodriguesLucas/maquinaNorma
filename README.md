@@ -1,5 +1,8 @@
 
+![Modelo Conceitual](https://github.com/RodriguesLucas/maquinaNorma/blob/main/ASSETS/Unisc.png)
+
 # Computabilidade – Trabalho 1 – Simulador máquina Norma
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/RodriguesLucas/maquinaNorma/blob/main/LICENSE) 
 
 NOME: Gabriel Lopes, Henyo Nunes e Lucas Rodrigues  
 DATA: 12/12/2022  
@@ -34,8 +37,8 @@ Neste simulador, utilizamos a estrutura de lista, e utilizamos a linguagem Java.
 - executa() - Percorre a lista de instruções (Rótulos), fazendo as operações correspondentes a cada posição da lista. Tendo a parada definida pelo usuário no código de execução.
 - executaMacro() - Percorre a lista de Macros criadas anteriormente, e chama o método executa().
 # Prints das Telas:
-Sem Macro			     
+# Sem Macro			     
+![Modelo Conceitual](https://github.com/RodriguesLucas/maquinaNorma/blob/main/ASSETS/SemMacro.png)
 
-
-Com Macro
-
+# Com Macro
+![Modelo Conceitual](https://github.com/RodriguesLucas/maquinaNorma/blob/main/ASSETS/ComMacro.png)
