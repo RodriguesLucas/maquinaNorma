@@ -37,8 +37,8 @@ Neste simulador, utilizamos a estrutura de lista, e utilizamos a linguagem Java.
 - executa() - Percorre a lista de instruções (Rótulos), fazendo as operações correspondentes a cada posição da lista. Tendo a parada definida pelo usuário no código de execução.
 - executaMacro() - Percorre a lista de Macros criadas anteriormente, e chama o método executa().
 # Prints das Telas:
-# Sem Macro			     
+# Execução sem Macro:			     
 ![Modelo Conceitual](https://github.com/RodriguesLucas/maquinaNorma/blob/main/ASSETS/SemMacro.png)
 
-# Com Macro
+# Execução com Macro:
 ![Modelo Conceitual](https://github.com/RodriguesLucas/maquinaNorma/blob/main/ASSETS/ComMacro.png)
